@@ -1,8 +1,8 @@
-# RustBot
+https://pythonprogramming.net/discordpy-basic-bot-tutorial-introduction/# RustBot
 A Discord Bot written in Python utilizing discord.py.
 
 This bot is a work in progress and lacks many features. The goal of this project is to learn the discord.py module and
-write a discord bot from the ground up.
+write a discord bot from the ground up. I want to thank Sentdex for the guide he has published which can be [found here](https://pythonprogramming.net/discordpy-basic-bot-tutorial-introduction/)
 
 # Current Features:
 
@@ -28,5 +28,5 @@ This graph is generated in the background.
 
 # Setting it Up
 
-As of writting this, the bot is very early in development and setting it up requires some programming knowledge. If you want to set it up, just follow Sent's guide on https://pythonprogramming.net/discordpy-basic-bot-tutorial-introduction/ . You just need to follow it until the first code block is shown. Ensure that the token.txt file contains the token of your bot, and the guild id
+As of writting this, the bot is very early in development and setting it up requires some programming knowledge. If you want to set it up, just follow [Sent's guide](https://pythonprogramming.net/discordpy-basic-bot-tutorial-introduction/). You just need to follow it until the first code block is shown. Ensure that the token.txt file contains the token of your bot, and the guild id
 is the id of the server the bot is in.
