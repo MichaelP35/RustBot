@@ -8,23 +8,23 @@ write a discord bot from the ground up. I want to thank Sentdex for the guide he
 
 1. **r.help**
 
-Sends a DM to the user _which_ will include the list of available commands.
+   Sends a DM to the user _which_ will include the list of available commands.
    
 2. **r.test**
 
-Makes the bot state "**Hello, World!**".
+   Makes the bot state "**Hello, World!**".
 
 3. **r.version**
 
-Makes the bot state what version of discordpy is being used. This may later change
-into stating the version of the bot.
+   Makes the bot state what version of discordpy is being used. This may later change
+   into stating the version of the bot.
 
 4. **r.members**
 
-Makes the bot state: Total User Population of Guild/Server (Based on Guild ID) and
-Number of Users Online&Offline&Idle. Along with this, the bot posts a graph which shows
-the total numbers of users online throughout a timeline (Starting from When the Bot Joined the Server).
-This graph is generated in the background.
+   Makes the bot state: Total User Population of Guild/Server (Based on Guild ID) and
+   Number of Users Online&Offline&Idle. Along with this, the bot posts a graph which shows
+   the total numbers of users online throughout a timeline (Starting from When the Bot Joined the Server).
+   This graph is generated in the background.
 
 ## Setting it Up
 
