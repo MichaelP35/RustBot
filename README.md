@@ -8,7 +8,7 @@ write a discord bot from the ground up. I want to thank Sentdex for the guide he
 
 1. **r.help**
 
-   Sends a DM to the user _which_ will include the list of available commands.
+   Sends a DM to the user that lists all available commands.
    
 2. **r.test**
 

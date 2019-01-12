@@ -63,7 +63,10 @@ async def on_message(message):  # Event that happens per any message.
     print(f"{message.channel}: {message.author}: {message.author.name}: {message.content}")  # Records message.
 
     if "r.help" in message.content.lower():  # r.help lists all commands.
-        await message.author.send("```r.help: DMs the user of all available commands.")  # Sends the message through DM.
+        await message.author.send("```r.help: DMs the user of all available commands.\nr.test: Makes RustBot"
+                                  "state 'Hello, World!'.\nr.version: Makes the bot state what version of discordpy is"
+                                  " being used.\nr.members: Makes RustBot post date of the activity of the"
+                                  " server.")  # Sends the message through DM.
 
     elif "r.test" in message.content.lower():  # r.test tests if bot responds.
         await message.channel.send("**Hello, World!**")  # Sends the message in the channel the user messaged in.
