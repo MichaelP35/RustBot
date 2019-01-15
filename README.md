@@ -8,25 +8,21 @@ write a discord bot from the ground up. I want to thank Sentdex for the guide he
 
 1. **r.help**
 
-   Sends a DM to the user that lists all available commands.
+   Sends a DM listing all available commands.
    
-2. **r.test**
+2. **r.ping**
 
-   Makes the bot state "**Hello, World!**".
+   Sends a channel message stating ping of RustBot.
 
-3. **r.version**
+3. **r.members**
 
-   Makes the bot state what version of discordpy is being used. This may later change
-   into stating the version of the bot.
+   Sends a channel message containing data of member activity.
 
-4. **r.members**
+4. **r.version**
 
-   Makes the bot state: Total User Population of Guild/Server (Based on Guild ID) and
-   Number of Users Online&Offline&Idle. Along with this, the bot posts a graph which shows
-   the total numbers of users online throughout a timeline (Starting from When the Bot Joined the Server).
-   This graph is generated in the background.
+   Sends a channel message containing version of discord.py being run.
 
 ## Setting it Up
 
-As of writting this, the bot is very early in development and setting it up requires some programming knowledge. If you want to set it up, just follow [Sent's guide](https://pythonprogramming.net/discordpy-basic-bot-tutorial-introduction/). You just need to follow it until the first code block is shown. Ensure that the token.txt file contains the token of your bot, and the guild id
+As of writing this, the bot is very early in development and setting it up requires some programming knowledge. If you want to set it up, just follow [Sent's guide](https://pythonprogramming.net/discordpy-basic-bot-tutorial-introduction/). You just need to follow it until the first code block is shown. Ensure that the token.txt file contains the token of your bot, and the guild id
 is the id of the server the bot is in.
