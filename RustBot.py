@@ -1,14 +1,15 @@
-import discord
-import asyncio
-import time
-import pandas as pd
-import matplotlib.pyplot as plt
-from matplotlib import style
-style.use("fivethirtyeight")
+import discord  # Main Discord API Wrapper.
+from discord.ext import commands  # Discord API Wrapper Extension for Simplified Commands.
+import asyncio  # Needed for Background Tasks.
+import time  # Needed for Background Tasks.
+import pandas as pd  # Needed for Parsing CSV.
+import matplotlib.pyplot as plt  # Needed for Graphing.
+from matplotlib import style  # Needed for Graph Styling.
+style.use("fivethirtyeight")  # Sets Graph Style.
 
 
-token = open("token.txt", "r").read()  # Reads Token Based on token.txt.
-client = discord.Client()  # Starts the discord client.
+client = commands.Bot(command_prefix='r.', activity=discord.Game('r.help'))  # Refers the bot as 'Client'.
+client.remove_command("help")  # Removes integrated 'help' for commands.
 
 
 def community_report(guild):  # Calculates number of users based on being online, offline, or idle.
@@ -23,13 +24,13 @@ def community_report(guild):  # Calculates number of users based on being online
         else:
             idle += 1
 
-    return online, idle, offline
+    return online, idle, offline  # Returns number of users in corresponding section.
 
 
 async def user_metrics_background_task():  # Based on number of users, it prints an graph.
     await client.wait_until_ready()
     global server_guild
-    server_guild = client.get_guild(372445121050050560)
+    server_guild = client.get_guild(372445121050050560)  # Sets the guild (Set to OGT).
     while True:
         try:
             online, idle, offline = community_report(server_guild)
@@ -45,42 +46,63 @@ async def user_metrics_background_task():  # Based on number of users, it prints
             plt.legend()
             plt.savefig("online.png")
 
-            await asyncio.sleep(5)
+            await asyncio.sleep(5)  # Waits 5 secs before repeating task.
 
         except Exception as e:
             print(str(e))
             await asyncio.sleep(5)
 
 
-@client.event  # Event decorator/wrapper.
+@client.event  # Event Decorator/Wrapper.
 async def on_ready():  # Method expected by client. This runs once when connected.
-    print(f'We have logged in as {client.user}')  # Notification of login.
-    await client.change_presence(activity=discord.Game("r.help"))  # Sets "Game" Activity to "r.help".
+    print(f'We have logged in as {client.user}\n')  # Notification of login.
 
 
-@client.event
+@client.event  # Event Decorator/Wrapper.
+async def on_member_join(member):  # Users that join will get the initiating role.
+    role = discord.utils.get(member.server.roles, name='Initiating')
+    await discord.Member.add_roles(member, role)
+
+
+@client.event  # Event Decorator/Wrapper.
 async def on_message(message):  # Event that happens per any message.
-    print(f"{message.channel}: {message.author}: {message.author.name}: {message.content}")  # Records message.
+    if message.author != client.user:  # If the message isn't from RustBot.
+        print(f"#{message.channel} | {message.author}({message.author.name}): {message.content}")  # Logs message.
+    await client.process_commands(message)  # Allows for commands to be registered by @client.command().
 
-    if "r.help" in message.content.lower():  # r.help lists all commands.
-        await message.author.send("```r.help: DMs the user of all available commands.\nr.test: Makes RustBot"
-                                  "state 'Hello, World!'.\nr.version: Makes the bot state what version of discordpy is"
-                                  " being used.\nr.members: Makes RustBot post date of the activity of the"
-                                  " server.```")  # Sends the message through DM.
 
-    elif "r.test" in message.content.lower():  # r.test tests if bot responds.
-        await message.channel.send("**Hello, World!**")  # Sends the message in the channel the user messaged in.
+@client.command()  # Creates a Command.
+async def help(ctx):  # Help: Sends a DM listing all available commands.
+    await ctx.author.send("```\n"
+                          "r.help: DMs the user of all available commands.\n"
+                          "r.ping: States the Ping of the Bot.\n"
+                          "r.members: Provides Statistics regarding Server Members Activity.\n"
+                          "r.version: States the version of Discord.py that is being used\n"
+                          "```")
 
-    elif "r.version" in message.content.lower():  # r.version states version of discordpy being used.
-        await message.channel.send(f"**Running Discord.py v{discord.__version__}**")
 
-    elif "r.members" == message.content.lower():  # Provides both number of users and user graph.
-        online, idle, offline = community_report(server_guild)
-        await message.channel.send(f"Total Members: {server_guild.member_count}```Online: {online}.\n"
-                                   f"Idle/Busy: {idle}.\nOffline: {offline}```")
-        file = discord.File("online.png", filename="online.png")
-        await message.channel.send(file=file)
+@client.command()  # Creates a Command.
+async def ping(ctx):  # Ping: Sends a channel message stating ping of RustBot.
+    ping_ = client.latency
+    ping = round(ping_ * 1000)
+    await ctx.channel.send(f"My ping is {ping}ms")
+
+
+@client.command()  # Creates a Command.
+async def members(ctx):  # Members: Sends a channel message containing data of member activity.
+    online, idle, offline = community_report(server_guild)
+    await ctx.channel.send(f"__Total Members:__ **{server_guild.member_count}**\n"
+                           f"Online: **{online}**\n"
+                           f"Idle/Busy: **{idle}**\n"
+                           f"Offline: **{offline}**")
+    file = discord.File("online.png", filename="online.png")
+    await ctx.channel.send(file=file)
+
+
+@client.command()  # Creates a Command.
+async def version(ctx):  # Version: Sends a channel message containing version of discord.py being run.
+    await ctx.channel.send(f"Running Discord.py **v{discord.__version__}**")
 
 
 client.loop.create_task(user_metrics_background_task())  # Tasks the Bot to generate an graph of member activity.
-client.run(token)  # Activates the RustBot.
+client.run(open("token.txt", "r").read())  # Activates RustBot and reads token.txt on root directory.
