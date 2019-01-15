@@ -2,7 +2,7 @@
 A Discord Bot written in Python utilizing the [discord.py module](https://discordpy.readthedocs.io/en/latest/).
 
 This bot is a work in progress and lacks many features. The goal of this project is to learn the discord.py module and
-write a discord bot from the ground up. I want to thank Sentdex for the guide he has published which can be [found here](https://pythonprogramming.net/discordpy-basic-bot-tutorial-introduction/)
+write a discord bot from the ground up. I want to thank Sentdex for the guide he has published which can be [found here](https://pythonprogramming.net/discordpy-basic-bot-tutorial-introduction/).
 
 ## Current Features:
 
