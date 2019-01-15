@@ -85,7 +85,7 @@ async def help(ctx):  # Help: Sends a DM listing all available commands.
 async def ping(ctx):  # Ping: Sends a channel message stating ping of RustBot.
     ping_ = client.latency
     ping = round(ping_ * 1000)
-    await ctx.channel.send(f"My ping is {ping}ms")
+    await ctx.channel.send(f"My Ping is **{ping}ms**")
 
 
 @client.command()  # Creates a Command.
