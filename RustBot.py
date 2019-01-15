@@ -2,6 +2,8 @@ import discord  # Main Discord API Wrapper.
 from discord.ext import commands  # Discord API Wrapper Extension for Simplified Commands.
 import asyncio  # Needed for Background Tasks.
 import time  # Needed for Background Tasks.
+import requests  # Needed for BeautifulSoup4.
+from bs4 import BeautifulSoup  # Needed for Web Scraping.
 import pandas as pd  # Needed for Parsing CSV.
 import matplotlib.pyplot as plt  # Needed for Graphing.
 from matplotlib import style  # Needed for Graph Styling.
@@ -78,6 +80,7 @@ async def help(ctx):  # Help: Sends a DM listing all available commands.
                           "r.ping: States the Ping of the Bot.\n"
                           "r.members: Provides Statistics regarding Server Members Activity.\n"
                           "r.version: States the version of Discord.py that is being used\n"
+                          "r.weather: Provides Weather Data Based on Zip-code (US Only)\n"
                           "```")
 
 
@@ -103,6 +106,22 @@ async def members(ctx):  # Members: Sends a channel message containing data of m
 async def version(ctx):  # Version: Sends a channel message containing version of discord.py being run.
     await ctx.channel.send(f"Running Discord.py **v{discord.__version__}**")
 
+
+@client.command()  # Creates a Command.
+async def weather(ctx, arg):  # Weather: Sends a channel message containing weather data based on user input.
+    url = ('https://www.weather.gov/' + arg)  # Put data together for site.
+    data = requests.get(url)  # Loads site.
+    soup = BeautifulSoup(data.text, 'html.parser')  # Parses site.
+
+    # Prints Conditions
+    Conditions = soup.find(
+        'p', {'class': 'myforecast-current'}).text.strip()
+    # Prints Temperature
+    TemperatureF = soup.find(
+        'p', {'class': 'myforecast-current-lrg'}).text.strip()
+    TemperatureC = soup.find(
+        'p', {'class': 'myforecast-current-sm'}).text.strip()
+    await ctx.channel.send(f"Conditions: **{Conditions}** | **{TemperatureF}** | **{TemperatureC}**")
 
 client.loop.create_task(user_metrics_background_task())  # Tasks the Bot to generate an graph of member activity.
 client.run(open("token.txt", "r").read())  # Activates RustBot and reads token.txt on root directory.

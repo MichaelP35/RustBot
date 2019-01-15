@@ -21,6 +21,10 @@ write a discord bot from the ground up. I want to thank Sentdex for the guide he
 4. **r.version**
 
    Sends a channel message containing version of discord.py being run.
+   
+5. **r.weather**
+
+   r.weather: Sends a channel message containing weather data based on zip-code (US Only).
 
 ## Setting it Up
 
