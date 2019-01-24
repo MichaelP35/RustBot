@@ -114,14 +114,14 @@ async def weather(ctx, arg):  # Weather: Sends a channel message containing weat
     soup = BeautifulSoup(data.text, 'html.parser')  # Parses site.
 
     # Prints Conditions
-    Conditions = soup.find(
+    conditions = soup.find(
         'p', {'class': 'myforecast-current'}).text.strip()
     # Prints Temperature
-    TemperatureF = soup.find(
+    temperature_f = soup.find(
         'p', {'class': 'myforecast-current-lrg'}).text.strip()
-    TemperatureC = soup.find(
+    temperature_c = soup.find(
         'p', {'class': 'myforecast-current-sm'}).text.strip()
-    await ctx.channel.send(f"Conditions: **{Conditions}** | **{TemperatureF}** | **{TemperatureC}**")
+    await ctx.channel.send(f"Conditions: **{conditions}** | **{temperature_f}** | **{temperature_c}**")
 
 client.loop.create_task(user_metrics_background_task())  # Tasks the Bot to generate an graph of member activity.
 client.run(open("token.txt", "r").read())  # Activates RustBot and reads token.txt on root directory.
